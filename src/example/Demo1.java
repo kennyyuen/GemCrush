@@ -39,13 +39,11 @@ public class Demo1 {
 
     public void startGame() {
 
-        Gem[] gem = new Gem[64];
-        int x = 0;
+        Gem[][] gem = new Gem[8][8];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 int ran = (int) (Math.random() * 7) + 1;
-                gem[x] = new Gem(i, j, ran);
-                x++;
+                gem[i][j] = new Gem(i, j, ran);
             }
         }
 
@@ -58,17 +56,16 @@ public class Demo1 {
         Timer timer = new Timer();
         timer.start();
         // enter the main game loop
-        int selectedGem = -1;
+        int[] selectedGem = {-1,-1};
         while (true) {
 
             // get whatever inputs
-            Point point = console.getClickedPoint();            
-            if(isFocus(gem)){
-                gem[selectedGem].toggleFocus();
+            Point point = console.getClickedPoint();
+            if (isFocus(gem)) {
+                gem[selectedGem[0]][selectedGem[1]].toggleFocus();
             }
-            selectedGem = showFocus(point,gem);
-                
-            System.out.println(selectedGem);
+            selectedGem = showFocus(point, gem);
+            
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
                 console.clear();
@@ -78,8 +75,10 @@ public class Demo1 {
 
                 console.drawText(60, 250, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 280, "220", new Font("Helvetica", Font.PLAIN, 20), Color.white);
-                for (int z = 0; z < 64; z++) {
-                    gem[z].display();
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        gem[i][j].display();
+                    }
                 }
 
                 console.update();
@@ -88,27 +87,45 @@ public class Demo1 {
             // should be larger than the frame rate
             // for fps at 25, it should not exceed 40ms
             console.idle(10);
-            if(timer.getCurrentTime() > 0)
+            if (timer.getCurrentTime() > 0) {
                 timer.countDown();
-            
+            }
+
         }
     }
 
-    public static int showFocus(Point point,Gem[] gem) {
+    private static int[] showFocus(Point point, Gem[][] gem) {
         if (point != null) {
-            for(int x = 0;x < 64;x++)
-              if(gem[x].isAt(point)){
-                  gem[x].toggleFocus();
-                  return x;
-              }            
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (gem[i][j].isAt(point)) {
+                        gem[i][j].toggleFocus();
+                        return new int[]{i, j};
+                    }
+                }
+            }
         }
-        return -1;
+        return new int[]{-1, -1};
     }
-    public static boolean isFocus(Gem[] gem){
-        for(int x = 0;x < 64;x++)
-              if(gem[x].isSelected()){
-                  return true;
-              }  
+
+    private static boolean isFocus(Gem[][] gem) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (gem[i][j].isSelected()) {
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    private static void checkMatch() {
+
+    }
+    private boolean checkX(){
+        
+    }
+    private boolean checkY(){
+        
     }
 }
