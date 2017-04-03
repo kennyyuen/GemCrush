@@ -1,2 +1,2 @@
 # GemCrush
-/* this project is Gem Crush game*/
+This project is Gem Crush game.
