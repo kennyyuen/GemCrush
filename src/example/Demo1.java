@@ -55,16 +55,17 @@ public class Demo1 {
         console.setBackground("/assets/board.png");
         Timer timer = new Timer();
         timer.start();
+        Engine.checkMatchHorizontal(gem);
         // enter the main game loop
-        int[] selectedGem = {-1,-1};
+        int[] selectedGem = {-1, -1};
         while (true) {
 
             // get whatever inputs
             Point point = console.getClickedPoint();
-            if (isFocus(gem)) {
+            if (Engine.isFocus(gem)) {
                 gem[selectedGem[0]][selectedGem[1]].toggleFocus();
             }
-            selectedGem = showFocus(point, gem);
+            selectedGem = Engine.showFocus(point, gem);
             
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
@@ -93,39 +94,5 @@ public class Demo1 {
 
         }
     }
-
-    private static int[] showFocus(Point point, Gem[][] gem) {
-        if (point != null) {
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    if (gem[i][j].isAt(point)) {
-                        gem[i][j].toggleFocus();
-                        return new int[]{i, j};
-                    }
-                }
-            }
-        }
-        return new int[]{-1, -1};
-    }
-
-    private static boolean isFocus(Gem[][] gem) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (gem[i][j].isSelected()) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private static void checkMatch() {
-
-    }
-    private boolean checkX(){
-        
-    }
-    private boolean checkY(){
-        
-    }
+    
 }

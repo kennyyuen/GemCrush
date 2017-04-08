@@ -114,5 +114,8 @@ public class Gem {
     public void toggleFocus() {
         selected = !selected;
     }
+    public int getType(){
+        return type;
+    }
 
 }
