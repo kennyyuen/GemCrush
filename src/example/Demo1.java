@@ -40,12 +40,16 @@ public class Demo1 {
     public void startGame() {
 
         Gem[][] gem = new Gem[8][8];
+        boolean match = false;
+        do{
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 int ran = (int) (Math.random() * 7) + 1;
                 gem[i][j] = new Gem(i, j, ran);
             }
         }
+        match = Engine.checkMatch(gem);
+        }while(match == true);
 
         // board dimension can be obtained from console
         int width = console.getBoardWidth();
@@ -55,17 +59,13 @@ public class Demo1 {
         console.setBackground("/assets/board.png");
         Timer timer = new Timer();
         timer.start();
-        Engine.checkMatchHorizontal(gem);
         // enter the main game loop
-        int[] selectedGem = {-1, -1};
+        Engine.Score Score = Engine.newScore();
         while (true) {
 
             // get whatever inputs
             Point point = console.getClickedPoint();
-            if (Engine.isFocus(gem)) {
-                gem[selectedGem[0]][selectedGem[1]].toggleFocus();
-            }
-            selectedGem = Engine.showFocus(point, gem);
+            Engine.showFocus(gem, point);
             
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
@@ -75,7 +75,7 @@ public class Demo1 {
                 console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
 
                 console.drawText(60, 250, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
-                console.drawText(60, 280, "220", new Font("Helvetica", Font.PLAIN, 20), Color.white);
+                console.drawText(60, 280, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         gem[i][j].display();
