@@ -49,7 +49,7 @@ public class Demo1 {
                 gem[i][j] = new Gem(i, j, ran);
             }
         }
-        match = Engine.checkMatch(gem);
+        match = Engine.isMatch(gem);
         }while(match == true);
 
         // board dimension can be obtained from console
@@ -69,7 +69,7 @@ public class Demo1 {
             // get whatever inputs
             Point point = console.getClickedPoint();
             Engine.showFocus(gem, point);
-            
+            Engine.checkMatch(gem);
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
                 console.clear();
@@ -90,6 +90,7 @@ public class Demo1 {
                 }
                 console.update();
             }
+            
             // the idle time affects the no. of iterations per second which 
             // should be larger than the frame rate
             // for fps at 25, it should not exceed 40ms

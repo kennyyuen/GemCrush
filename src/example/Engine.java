@@ -124,8 +124,28 @@ public class Engine {
             }
         }
     }
+    
+    private static Gem[] rowcomboToGems(Gem[][] gem, Combo combo){
+        Gem[] temp = new Gem[combo.getCombo()];
+        for (int i = 0; i < combo.getCombo();i++){
+            temp[i] = gem[combo.getXIndex()+i][combo.getYIndex()];            
+        }
+        return temp;
+    }
 
-    public static boolean checkMatch(Gem[][] gem) {
+    private static Gem[] colcomboToGems(Gem[][] gem, Combo combo){
+        Gem[] temp = new Gem[combo.getCombo()];
+        for(int i = 0;i < combo.getCombo();i++)
+            temp[i] = gem[combo.getYIndex()][combo.getXIndex()+i];
+        return temp;
+    }    
+    
+    private static void removeGem(Gem gem) {
+        gem.setType(7);
+        gem.setPic(Gem.getTypeFile(gem.getType()));
+    }
+        
+    public static boolean isMatch(Gem[][] gem) {
         boolean match = false;
         Combo[] rowCombo = checkMatchHorizontal(gem);
         Combo[] colCombo = checkMatchVertical(gem);
@@ -133,7 +153,37 @@ public class Engine {
             match = true;
         }
         return match;
-        //Combo[] combo = combineCombo(rowCombo,colCombo);
+    }
+    
+    public static void checkMatch(Gem[][] gem){
+        Combo[] rowCombo = checkMatchHorizontal(gem);
+        Combo[] colCombo = checkMatchVertical(gem);
+        if (rowCombo[0].getCombo() != 0 || colCombo[0].getCombo() != 0) {                      
+            int i = 0;
+            while(rowCombo[i] != null){
+                Gem[] remGem = rowcomboToGems(gem,rowCombo[i]);
+                int j = 0;
+                while(j < remGem.length){
+                    removeGem(remGem[j]);
+                    j++;
+                }
+                i++;
+            }
+            i = 0;
+            while(colCombo[i] != null){
+                Gem[] remGem = colcomboToGems(gem,colCombo[i]);
+                int j = 0;
+                while(j < remGem.length){
+                    removeGem(remGem[j]);
+                    j++;
+                }
+                i++;
+            }
+        }
+    }
+    
+    private static void fallDown(){
+        
     }
 
     public static Combo[] checkMatchHorizontal(Gem[][] gem) {
@@ -256,20 +306,11 @@ public class Engine {
         }
         return totalCombo;
     }
-
-    private static void removeGem() {
-
-    }
-
-    private static void swapGem(Gem[][] gem, int x, int y) {        
-        System.out.println(gem[selectedX][selectedY].getType());
-        System.out.println(gem[x][y].getType());
-        System.out.println("swap");
+    
+    private static void swapGem(Gem[][] gem, int x, int y) {
         int temp = gem[selectedX][selectedY].getType();
         gem[selectedX][selectedY].setType(gem[x][y].getType());
         gem[x][y].setType(temp);
-        System.out.println(gem[selectedX][selectedY].getType());
-        System.out.println(gem[x][y].getType());
         repaint(gem);
     }
 
