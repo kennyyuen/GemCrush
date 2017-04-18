@@ -210,13 +210,50 @@ public class Engine {
                 }
                 //sound.playSound();
                 i++;
-            }
+            }            
         }
+        fallDown(gem);
+        addNew(gem);
+        if(nextGem1 == -1 && nextGem2 == -1)
+            random2GemType();
         Score.calcScore(count);
     }
 
-    private static void fallDown() {
+    private static void fallDown(Gem[][] gem) {
+        for (int i = 0; i < 8; i++) {
+            int[] type = getColType(i, gem);
+            for (int j = 7; j > 0; j--) {
+                for(int x = 7;x > 0;x--)
+                if (type[j] == 7) {
+                    gem[i][x].setType(gem[i][x-1].getType());
+                    gem[i][x-1].setType(7);
+                }
+            }
+        }
+        reprint(gem);
+        fallDownAnimation();
+    }
 
+    private static void fallDownAnimation() {
+    }
+
+    private static void addNew(Gem[][] gem) {
+        for (int i = 0; i < 8; i++) {
+            int[] type = getColType(i, gem);
+            for (int j = 7; j > 0; j--) {
+                if (type[j] == 7) {
+                    if (nextGem1 != -1) {
+                        gem[i][j].setType(nextGem1);
+                        nextGem1 = -1;
+                    } else if (nextGem2 != -1) {
+                        gem[i][j].setType(nextGem2);
+                        nextGem2 = -1;
+                    } else {
+                        gem[i][j].setType((int) (Math.random() * 7));
+                    }
+                }
+            }
+        }
     }
 
     public static Combo[] checkMatchHorizontal(Gem[][] gem) {
