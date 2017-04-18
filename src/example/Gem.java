@@ -24,6 +24,7 @@ public class Gem {
     // the size of the gem
     public static final int w = 65;
     public static final int h = 65;
+
     // default position in 8x8 grid    
     private int posX = 0;
     private int posY = 0;
@@ -32,36 +33,19 @@ public class Gem {
     private Image pic;
     private Image focus;
     private int type;
+    private static final String[] typeFile = {"/assets/gemBlue.png","/assets/gemGreen.png","/assets/gemOrange.png","/assets/gemPurple.png","/assets/gemRed.png","/assets/gemWhite.png","/assets/gemYellow.png"};
+
 
     Gem(int x, int y, int t) {
-        String file = "";
-        switch (t) {
-            case 1:
-                file = "/assets/gemBlue.png";
-                break;
-            case 2:
-                file = "/assets/gemGreen.png";
-                break;
-            case 3:
-                file = "/assets/gemOrange.png";
-                break;
-            case 4:
-                file = "/assets/gemPurple.png";
-                break;
-            case 5:
-                file = "/assets/gemRed.png";
-                break;
-            case 6:
-                file = "/assets/gemWhite.png";
-                break;
-            default:
-                file = "/assets/gemYellow.png";
-        }
         this.focus = new ImageIcon(this.getClass().getResource("/assets/focus.png")).getImage();
-        this.pic = new ImageIcon(this.getClass().getResource(file)).getImage();
+        this.pic = new ImageIcon(this.getClass().getResource(typeFile[t])).getImage();
         this.posX = x;
         this.posY = y;
         this.type = t;
+    }
+    
+    public static String getTypeFile(int t){
+        return typeFile[t];
     }
 
     public void display() {

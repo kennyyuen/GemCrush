@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 package example;
-
+import game.GameConsole;
 import java.awt.Point;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -16,6 +17,8 @@ import java.util.regex.Pattern;
 public class Engine {
     private static int selectedX;
     private static int selectedY;
+    private static int nextGem1;
+    private static int nextGem2;
 
     public static class Combo {
 
@@ -172,13 +175,23 @@ public class Engine {
         return type;
     }
 
-    private static int[] random2GemType() {
-        int[] ran = new int[2];
-        ran[0] = (int) (Math.random() * 7) + 1;
-        ran[1] = (int) (Math.random() * 7) + 1;
-        return ran;
+    public static void random2GemType() {
+        nextGem1 = (int) (Math.random() * 7);
+        nextGem2 = (int) (Math.random() * 7);
     }
     
+    public static int getNextGem1Type(){
+        return nextGem1;
+    }
+    
+    public static int getNextGem2Type(){
+        return nextGem2;
+    }
+    
+    public static void drawNext2(){
+        GameConsole.getInstance().drawImage(60,250,new ImageIcon(Gem.getTypeFile(nextGem1)).getImage());
+    }
+        
     private static Combo[] combineCombo(Combo[] x,Combo[] y){
         int count = 0;
         for (int i = 0;i < x.length;i++)

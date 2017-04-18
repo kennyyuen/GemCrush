@@ -10,6 +10,7 @@ import game.GameConsole;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
+import javax.swing.ImageIcon;
 
 /**
  * Demo for the use of:
@@ -44,7 +45,7 @@ public class Demo1 {
         do{
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                int ran = (int) (Math.random() * 7) + 1;
+                int ran = (int) (Math.random() * 7);
                 gem[i][j] = new Gem(i, j, ran);
             }
         }
@@ -73,9 +74,10 @@ public class Demo1 {
 
                 console.drawText(60, 150, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
-
-                console.drawText(60, 250, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
-                console.drawText(60, 280, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
+                console.drawText(60, 250, "[Next 2 Gems]", new Font("Helvetica", Font.BOLD, 20), Color.white);
+                console.drawImage(60,250,new ImageIcon(Gem.getTypeFile(Engine.getNextGem1Type())).getImage());
+                console.drawText(60, 380, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
+                console.drawText(60, 410, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         gem[i][j].display();
@@ -93,6 +95,7 @@ public class Demo1 {
             }
 
         }
-    }
+    }   
+    
     
 }
