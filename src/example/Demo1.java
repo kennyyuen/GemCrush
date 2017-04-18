@@ -62,6 +62,7 @@ public class Demo1 {
         timer.start();
         // enter the main game loop
         Engine.Score Score = Engine.newScore();
+        Engine.random2GemType();
         while (true) {
 
             // get whatever inputs
@@ -75,7 +76,10 @@ public class Demo1 {
                 console.drawText(60, 150, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 console.drawText(60, 250, "[Next 2 Gems]", new Font("Helvetica", Font.BOLD, 20), Color.white);
-                console.drawImage(60,250,new ImageIcon(Gem.getTypeFile(Engine.getNextGem1Type())).getImage());
+                
+                console.drawImage(60,250,new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem1Type()))).getImage());
+                console.drawImage(120,250,new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem2Type()))).getImage());
+                
                 console.drawText(60, 380, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 410, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 for (int i = 0; i < 8; i++) {
