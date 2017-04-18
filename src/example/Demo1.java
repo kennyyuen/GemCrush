@@ -40,12 +40,12 @@ public class Demo1 {
 
     public void startGame() {
 
-        Gem[][] gem = new Gem[8][8];
+        Gem[][] gem = new Gem[8][8]; //2d array to save gems
         boolean match = false;
         do{
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                int ran = (int) (Math.random() * 7);
+                int ran = (int) (Math.random() * 7); //create random gems
                 gem[i][j] = new Gem(i, j, ran);
             }
         }
@@ -62,14 +62,14 @@ public class Demo1 {
         timer.start();
         // enter the main game loop
         Engine.Score Score = Engine.newScore();
-        Engine.random2GemType();
-        Engine.resetSelectedXY();
+        Engine.random2GemType(); //random next two gems
+        Engine.resetSelectedXY(); 
         while (true) {
 
             // get whatever inputs
             Point point = console.getClickedPoint();
-            Engine.showFocus(gem, point);
-            Engine.checkMatch(gem);
+            Engine.showFocus(gem, point); //selected point 
+            Engine.checkMatch(gem); //check if there any combo
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
                 console.clear();
@@ -83,7 +83,7 @@ public class Demo1 {
                 
                 console.drawText(60, 380, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 410, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < 8; i++) { //display gems
                     for (int j = 0; j < 8; j++) {
                         gem[i][j].display();
                     }
@@ -94,7 +94,7 @@ public class Demo1 {
             // the idle time affects the no. of iterations per second which 
             // should be larger than the frame rate
             // for fps at 25, it should not exceed 40ms
-            console.idle(10);
+            console.idle(10); //1second
             if (timer.getCurrentTime() > 0) {
                 timer.countDown();
             }

@@ -24,9 +24,9 @@ public class Engine {
 
     public static class Combo {
 
-        private int matches;
-        private int xIndex;
-        private int yIndex;
+        private int matches; // how many match 
+        private int xIndex; //where start the combo
+        private int yIndex; //which row or col
 
         public Combo() {
             matches = 0;
@@ -70,8 +70,8 @@ public class Engine {
         return selectedY;
     }
 
-    private static int[] checkFocus(Point point, Gem[][] gem) {
-        if (point != null) {
+    private static int[] checkFocus(Point point, Gem[][] gem) { //see which one user select 
+        if (point != null) {                                    // if no return -1,-1
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (gem[i][j].isAt(point)) {
@@ -83,21 +83,21 @@ public class Engine {
         return new int[]{-1, -1};
     }
 
-    public static void showFocus(Gem[][] gem, Point point) {
+    public static void showFocus(Gem[][] gem, Point point) { //text the selected one and do action
         int[] selected = checkFocus(point, gem);
         if (selected[0] != -1) {
-            if (!isFocus(gem)) {
+            if (!isFocus(gem)) { //new select
                 Sound sound = new Sound("/assets/select.wav");
-                gem[selected[0]][selected[1]].toggleFocus();
+                gem[selected[0]][selected[1]].toggleFocus(); //light up
                 sound.playSound();
-                selectedX = selected[0];
+                selectedX = selected[0]; //store the selected x,y
                 selectedY = selected[1];
-            } else {
+            } else { //the one select is one left or right, then swap
                 if (selected[0] == selectedX - 1 || selected[0] == selectedX + 1) {
                     if (selected[1] == selectedY) {
                         swapGem(gem, selected[0], selected[1]);
-                        setAllFocus(gem, false);
-                    } else {
+                        setAllFocus(gem, false); //light down
+                    } else { //the selected one is not adjacent, then change it to new x,y
                         Sound sound = new Sound("/assets/select.wav");
                         setAllFocus(gem, false);
                         gem[selected[0]][selected[1]].toggleFocus();
@@ -105,7 +105,7 @@ public class Engine {
                         selectedX = selected[0];
                         selectedY = selected[1];
                     }
-                } else {
+                } else { //the one select is one up or down, then swap
                     if (selected[1] == selectedY - 1 || selected[1] == selectedY + 1) {
                         if (selected[0] == selectedX) {
                             swapGem(gem, selected[0], selected[1]);
@@ -131,7 +131,7 @@ public class Engine {
         }
     }
 
-    public static boolean isFocus(Gem[][] gem) {
+    public static boolean isFocus(Gem[][] gem) { //check selected or not
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (gem[i][j].isSelected()) {
@@ -142,7 +142,7 @@ public class Engine {
         return false;
     }
 
-    private static void setAllFocus(Gem[][] gem, boolean flag) {
+    private static void setAllFocus(Gem[][] gem, boolean flag) { //all light down or up
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 gem[i][j].setSelected(flag);
@@ -150,7 +150,7 @@ public class Engine {
         }
     }
 
-    private static Gem[] rowcomboToGems(Gem[][] gem, Combo combo) {
+    private static Gem[] rowcomboToGems(Gem[][] gem, Combo combo) { //
         Gem[] temp = new Gem[combo.getCombo()];
         for (int i = 0; i < combo.getCombo(); i++) {
             temp[i] = gem[combo.getXIndex() + i][combo.getYIndex()];
@@ -181,15 +181,15 @@ public class Engine {
         return match;
     }
 
-    public static void checkMatch(Gem[][] gem) {
-        Combo[] rowCombo = checkMatchHorizontal(gem);
-        Combo[] colCombo = checkMatchVertical(gem);
+    public static void checkMatch(Gem[][] gem) { 
+        Combo[] rowCombo = checkMatchHorizontal(gem); //see how many and where is row combo
+        Combo[] colCombo = checkMatchVertical(gem); //see how many and where is col combo
         int count = 0;
         Sound sound = new Sound("/assets/match.wav");
-        if (rowCombo[0].getCombo() != 0 || colCombo[0].getCombo() != 0) {
+        if (rowCombo[0].getCombo() != 0 || colCombo[0].getCombo() != 0) { //if there is combo
             int i = 0;
-            while (rowCombo[i] != null) {
-                Gem[] remGem = rowcomboToGems(gem, rowCombo[i]);
+            while (rowCombo[i] != null) { //have rowcombo, remove it, how many gems removed
+                Gem[] remGem = rowcomboToGems(gem, rowCombo[i]); 
                 int j = 0;
                 while (j < remGem.length) {
                     removeGem(remGem[j]);
@@ -210,23 +210,33 @@ public class Engine {
                 }
                 //sound.playSound();
                 i++;
-            }            
+            }      
+            //count--,if col & row combo is intercepted
         }
         fallDown(gem);
         addNew(gem);
         if(nextGem1 == -1 && nextGem2 == -1)
-            random2GemType();
+            random2GemType(); 
         Score.calcScore(count);
     }
 
     private static void fallDown(Gem[][] gem) {
         for (int i = 0; i < 8; i++) {
-            int[] type = getColType(i, gem);
-            for (int j = 7; j > 0; j--) {
-                for(int x = 7;x > 0;x--)
+            int[] type = getColType(i, gem); //the ith row of col type array 
+            for (int j = 0; j <= 7; j++) {
                 if (type[j] == 7) {
-                    gem[i][x].setType(gem[i][x-1].getType());
-                    gem[i][x-1].setType(7);
+                    for(int k =0;k<8;k++)
+                    System.out.print(type[k]);
+                    for(int z=j;z>0;z--)
+                    {
+                        type[z] = type[z-1];
+                        type[z-1] = 7;
+                        gem[i][z].setType(gem[i][z-1].getType());
+                        gem[i][z-1].setType(7);
+                    }
+                    System.out.println();
+                    for(int k =0;k<8;k++)
+                    System.out.print(type[k]);
                 }
             }
         }
@@ -240,7 +250,7 @@ public class Engine {
     private static void addNew(Gem[][] gem) {
         for (int i = 0; i < 8; i++) {
             int[] type = getColType(i, gem);
-            for (int j = 7; j > 0; j--) {
+            for (int j = 7; j >= 0; j--) {
                 if (type[j] == 7) {
                     if (nextGem1 != -1) {
                         gem[i][j].setType(nextGem1);
