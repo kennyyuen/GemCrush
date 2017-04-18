@@ -247,7 +247,7 @@ public class Engine {
     private static void fallDownAnimation() {
     }
 
-    private static void addNew(Gem[][] gem) {
+    private static void addNew(Gem[][] gem) { //add new gems to empty gems
         for (int i = 0; i < 8; i++) {
             int[] type = getColType(i, gem);
             for (int j = 7; j >= 0; j--) {
@@ -266,7 +266,7 @@ public class Engine {
         }
     }
 
-    public static Combo[] checkMatchHorizontal(Gem[][] gem) {
+    public static Combo[] checkMatchHorizontal(Gem[][] gem) { //what combo in each row line
         Combo[] tRowCombo = new Combo[16];
         tRowCombo[0] = new Combo();
         int i = 0;
@@ -282,10 +282,10 @@ public class Engine {
                 }
             }
         }
-        return tRowCombo;
+        return tRowCombo; //total row combo
     }
 
-    public static Combo[] checkMatchVertical(Gem[][] gem) {
+    public static Combo[] checkMatchVertical(Gem[][] gem) { //what combo in each col line
         Combo[] tColCombo = new Combo[16];
         tColCombo[0] = new Combo();
         int j = 0;
@@ -301,10 +301,10 @@ public class Engine {
                 }
             }
         }
-        return tColCombo;
+        return tColCombo; //return col combo
     }
 
-    private static Combo[] findMatch(int[] type) {
+    private static Combo[] findMatch(int[] type) { //find combo
         int count = 1, j = 0;
         Combo[] c = new Combo[2];
         for (int x = 0; x < 2; x++) {
@@ -370,8 +370,8 @@ public class Engine {
     private static void reprint(Gem[][] gem) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                gem[i][j].display();
                 gem[i][j].setPic(Gem.getTypeFile(gem[i][j].getType()));
+                gem[i][j].display();
             }
         }
     }

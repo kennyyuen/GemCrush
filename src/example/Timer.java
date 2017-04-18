@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Timer {
 
-    private int initTime = 300000;
+    private int initTime = 300000; //equals to 5mins
     private int current;
 
     public void start(){
@@ -22,7 +22,7 @@ public class Timer {
 
         return String.format("%02d:%02d", minute, second);
     }
-    public void countDown(){
+    public void countDown(){ //count down time 1second
         current = current - 10;
     }
     public int getCurrentTime(){
