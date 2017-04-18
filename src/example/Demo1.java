@@ -63,6 +63,7 @@ public class Demo1 {
         // enter the main game loop
         Engine.Score Score = Engine.newScore();
         Engine.random2GemType();
+        Engine.resetSelectedXY();
         while (true) {
 
             // get whatever inputs
@@ -72,7 +73,7 @@ public class Demo1 {
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
                 console.clear();
-
+                
                 console.drawText(60, 150, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 console.drawText(60, 250, "[Next 2 Gems]", new Font("Helvetica", Font.BOLD, 20), Color.white);
@@ -87,7 +88,6 @@ public class Demo1 {
                         gem[i][j].display();
                     }
                 }
-
                 console.update();
             }
             // the idle time affects the no. of iterations per second which 
