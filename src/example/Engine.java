@@ -18,6 +18,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -457,6 +459,7 @@ public class Engine {
     public static class Score {
 
         private static int score;
+        private static int hScore;
 
         public Score() {
             score = 0;
@@ -472,6 +475,29 @@ public class Engine {
 
         private static void setScore(int s) {
             score = s;
+        }
+        
+        public static void readHScore(){
+            try {
+                Scanner file = new Scanner(new File("score.txt"));
+                hScore = Integer.parseInt(file.nextLine());
+            } catch (FileNotFoundException ex) {
+            }           
+        }
+        
+        public static void setHScore(int s){
+            hScore = s;            
+            try {
+                FileOutputStream out = new FileOutputStream("score.txt");
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
+                bw.write(Integer.toString(hScore));
+                bw.close();
+            } catch (IOException ex) {
+            }
+        }
+        
+        public static int getHScore(){
+            return hScore;
         }
     }
 

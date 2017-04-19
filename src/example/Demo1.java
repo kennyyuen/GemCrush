@@ -85,10 +85,10 @@ public class Demo1 {
 
                 console.drawText(60, 150, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
-                console.drawText(60, 250, "[Next 2 Gems]", new Font("Helvetica", Font.BOLD, 20), Color.white);
+                console.drawText(60, 250, "[Next 2 Birds]", new Font("Helvetica", Font.BOLD, 20), Color.white);
 
-                console.drawImage(60, 250, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem1Type()))).getImage());
-                console.drawImage(120, 250, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem2Type()))).getImage());
+                console.drawImage(60, 255, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem1Type()))).getImage());
+                console.drawImage(120, 255, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem2Type()))).getImage());
 
                 console.drawText(60, 380, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 410, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
@@ -106,17 +106,31 @@ public class Demo1 {
             // should be larger than the frame rate
             // for fps at 25, it should not exceed 40ms
             console.idle(10); //1second
-            if (timer.getCurrentTime() > 0) 
-                timer.countDown();            
-            
+            if (timer.getCurrentTime() > 0) {
+                timer.countDown();
+            }
+
             if (timer.getCurrentTime() == 0) {
-                int response = JOptionPane.showConfirmDialog(null, "Game Over."+" Your score is "+Engine.showScore()+" Do you want to retry?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (response == JOptionPane.YES_OPTION) {
-                    Demo1 game = new Demo1();
-                    game.startGame();
-                }else if(response == JOptionPane.NO_OPTION){
-                    console.close();
-                    break;
+                Engine.Score.readHScore();
+                if (Engine.Score.getScore() > Engine.Score.getHScore()) {
+                    Engine.Score.setHScore(Engine.Score.getScore());
+                    int response = JOptionPane.showConfirmDialog(null, "Congrats! " + " New Highest Score:  " + Engine.showScore() + " Do you want to retry?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (response == JOptionPane.YES_OPTION) {
+                        Demo1 game = new Demo1();
+                        game.startGame();
+                    } else if (response == JOptionPane.NO_OPTION) {
+                        console.close();
+                        break;
+                    }
+                } else {
+                    int response = JOptionPane.showConfirmDialog(null, "Game Over." + " Your score is " + Engine.showScore() + " Do you want to retry?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (response == JOptionPane.YES_OPTION) {
+                        Demo1 game = new Demo1();
+                        game.startGame();
+                    } else if (response == JOptionPane.NO_OPTION) {
+                        console.close();
+                        break;
+                    }
                 }
             }
         }
