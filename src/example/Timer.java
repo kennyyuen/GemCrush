@@ -4,7 +4,6 @@
  */
 package example;
 
-import java.util.concurrent.TimeUnit;
 
 public class Timer {
 
@@ -29,7 +28,12 @@ public class Timer {
     public void countDown(){ //count down time 1second
         current = current - 10;
     }
+    
     public int getCurrentTime(){
        return current;
+    }
+    
+    public void setInitTime(int t){
+        initTime = t;
     }
 }

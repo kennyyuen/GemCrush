@@ -6,7 +6,6 @@
 package example;
 
 import game.GameConsole;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Point;
@@ -16,16 +15,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 /**
  *
  * @author yuen
@@ -117,7 +112,7 @@ public class Engine {
                         setAllFocus(gem, false); //light down
                     } else { //the selected one is not adjacent, then change it to new x,y
                         Sound sound = new Sound("/assets/select.wav");
-                        setAllFocus(gem, false);
+                        gem[selectedX][selectedY].toggleFocus();
                         gem[selected[0]][selected[1]].toggleFocus();
                         sound.playSound();
                         selectedX = selected[0];
@@ -130,7 +125,7 @@ public class Engine {
                             setAllFocus(gem, false);
                         } else {
                             Sound sound = new Sound("/assets/select.wav");
-                            setAllFocus(gem, false);
+                            gem[selectedX][selectedY].toggleFocus();
                             gem[selected[0]][selected[1]].toggleFocus();
                             sound.playSound();
                             selectedX = selected[0];
@@ -138,7 +133,7 @@ public class Engine {
                         }
                     } else {
                         Sound sound = new Sound("/assets/select.wav");
-                        setAllFocus(gem, false);
+                        gem[selectedX][selectedY].toggleFocus();
                         gem[selected[0]][selected[1]].toggleFocus();
                         sound.playSound();
                         selectedX = selected[0];
@@ -246,28 +241,18 @@ public class Engine {
             int[] type = getColType(i, gem); //the ith row of col type array 
             for (int j = 0; j <= 7; j++) {
                 if (type[j] == 7) {
-                    for (int k = 0; k < 8; k++) {
-                        System.out.print(type[k]);
-                    }
                     for (int z = j; z > 0; z--) {
                         type[z] = type[z - 1];
                         type[z - 1] = 7;
                         gem[i][z].setType(gem[i][z - 1].getType());
                         gem[i][z - 1].setType(7);
                     }
-                    System.out.println();
-                    for (int k = 0; k < 8; k++) {
-                        System.out.print(type[k]);
-                    }
-                }
+                }         
             }
         }
         reprint(gem);
-        fallDownAnimation();
     }
-
-    private static void fallDownAnimation() {
-    }
+    
 
     private static void addNew(Gem[][] gem) { //add new gems to empty gems
         for (int i = 0; i < 8; i++) {
@@ -300,7 +285,6 @@ public class Engine {
                     rowCombo[a].setYIndex(j);
                     tRowCombo[i] = rowCombo[a];
                     i++;
-                    System.out.println("row " + j + " has " + rowCombo[a].getCombo() + "x combo at " + rowCombo[a].getXIndex());
                 }
             }
         }
@@ -319,7 +303,6 @@ public class Engine {
                     colCombo[a].setYIndex(i);
                     tColCombo[j] = colCombo[a];
                     j++;
-                    System.out.println("Col " + i + " has " + colCombo[a].getCombo() + "x combo at " + colCombo[a].getXIndex());
                 }
             }
         }

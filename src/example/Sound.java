@@ -5,8 +5,6 @@
 package example;
 
 import java.io.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import sun.audio.*;
 
 public class Sound {
@@ -25,6 +23,5 @@ public class Sound {
         } catch (Exception e) {
         }
     }
-
 
 }

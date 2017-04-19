@@ -106,13 +106,14 @@ public class Demo1 {
             // should be larger than the frame rate
             // for fps at 25, it should not exceed 40ms
             console.idle(10); //1second
-            if (timer.getCurrentTime() > 0) {
-                timer.countDown();
-            }
+            if (timer.getCurrentTime() > 0) 
+                timer.countDown();            
+            
             if (timer.getCurrentTime() == 0) {
                 int response = JOptionPane.showConfirmDialog(null, "Game Over."+" Your score is "+Engine.showScore()+" Do you want to retry?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (response == JOptionPane.YES_OPTION) {
-                    
+                    Demo1 game = new Demo1();
+                    game.startGame();
                 }else if(response == JOptionPane.NO_OPTION){
                     console.close();
                     break;
