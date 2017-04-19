@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * Demo for the use of:
@@ -42,15 +43,15 @@ public class Demo1 {
 
         Gem[][] gem = new Gem[8][8]; //2d array to save gems
         boolean match = false;
-        do{
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                int ran = (int) (Math.random() * 7); //create random gems
-                gem[i][j] = new Gem(i, j, ran);
+        do {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    int ran = (int) (Math.random() * 7); //create random gems
+                    gem[i][j] = new Gem(i, j, ran);
+                }
             }
-        }
-        match = Engine.isMatch(gem);
-        }while(match == true);
+            match = Engine.isMatch(gem);
+        } while (match == true);
 
         // board dimension can be obtained from console
         int width = console.getBoardWidth();
@@ -58,31 +59,41 @@ public class Demo1 {
 
         // set custom background image
         console.setBackground("/assets/board.png");
+        Sound bgm = new Sound("/assets/bgm.wav");
         Timer timer = new Timer();
         timer.start();
+        bgm.playSound();
         // enter the main game loop
-        Engine.Score Score = Engine.newScore();
+        Engine.Score score = Engine.newScore();
         Engine.random2GemType(); //random next two gems
-        Engine.resetSelectedXY(); 
+        Engine.resetSelectedXY();
         while (true) {
-
+            Engine.setGem(gem);
+            Engine.setTimer(timer);
             // get whatever inputs
             Point point = console.getClickedPoint();
+            Engine.SaveLoad.loadOptionPanel(point);
             Engine.showFocus(gem, point); //selected point 
             Engine.checkMatch(gem); //check if there any combo
+            if (Engine.isLoadSave()) {
+                gem = Engine.getGem();
+                timer = Engine.getTimer();
+            }
             // refresh at the specific rate, default 25 fps
             if (console.shouldUpdate()) {
                 console.clear();
-                
+
                 console.drawText(60, 150, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 console.drawText(60, 250, "[Next 2 Gems]", new Font("Helvetica", Font.BOLD, 20), Color.white);
-                
-                console.drawImage(60,250,new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem1Type()))).getImage());
-                console.drawImage(120,250,new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem2Type()))).getImage());
-                
+
+                console.drawImage(60, 250, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem1Type()))).getImage());
+                console.drawImage(120, 250, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem2Type()))).getImage());
+
                 console.drawText(60, 380, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
                 console.drawText(60, 410, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
+
+                console.drawText(60, 480, "[OPTION]", new Font("Helvetica", Font.BOLD, 20), Color.orange);
                 for (int i = 0; i < 8; i++) { //display gems
                     for (int j = 0; j < 8; j++) {
                         gem[i][j].display();
@@ -90,7 +101,7 @@ public class Demo1 {
                 }
                 console.update();
             }
-            
+
             // the idle time affects the no. of iterations per second which 
             // should be larger than the frame rate
             // for fps at 25, it should not exceed 40ms
@@ -98,9 +109,16 @@ public class Demo1 {
             if (timer.getCurrentTime() > 0) {
                 timer.countDown();
             }
-
+            if (timer.getCurrentTime() == 0) {
+                int response = JOptionPane.showConfirmDialog(null, "Game Over."+" Your score is "+Engine.showScore()+" Do you want to retry?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (response == JOptionPane.YES_OPTION) {
+                    
+                }else if(response == JOptionPane.NO_OPTION){
+                    console.close();
+                    break;
+                }
+            }
         }
-    }   
-    
-    
+
+    }
 }

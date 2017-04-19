@@ -33,7 +33,7 @@ public class Gem {
     private Image pic;
     private Image focus;
     private int type;
-    private static final String[] typeFile = {"/assets/gemBlue.png","/assets/gemGreen.png","/assets/gemOrange.png","/assets/gemPurple.png","/assets/gemRed.png","/assets/gemWhite.png","/assets/gemYellow.png","/assets/dummy.png"};
+    private static final String[] typeFile = {"/assets/cn.png","/assets/us.png","/assets/br.png","/assets/ar.png","/assets/de.png","/assets/is.png","/assets/kr.png","/assets/dummy.png"};
 
 
     Gem(int x, int y, int t) {

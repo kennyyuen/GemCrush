@@ -14,6 +14,10 @@ public class Timer {
     public void start(){
         current = initTime;
     }
+    
+    public void setCurrentTime(int c){
+        current = c;
+    }
 
     public String getTimeString() {
         int time = current / 1000;
