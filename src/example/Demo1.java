@@ -58,7 +58,7 @@ public class Demo1 {
         int height = console.getBoardHeight();
 
         // set custom background image
-        console.setBackground("/assets/board.png");
+        console.setBackground("/assets/board2.png");
         Sound bgm = new Sound("/assets/bgm.wav");
         Timer timer = new Timer();
         timer.start();
@@ -67,6 +67,7 @@ public class Demo1 {
         Engine.Score score = Engine.newScore();
         Engine.random2GemType(); //random next two gems
         Engine.resetSelectedXY();
+        Engine.Score.readHScore();
         while (true) {
             Engine.setGem(gem);
             Engine.setTimer(timer);
@@ -83,17 +84,20 @@ public class Demo1 {
             if (console.shouldUpdate()) {
                 console.clear();
 
-                console.drawText(60, 150, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
-                console.drawText(60, 180, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
+                console.drawText(60, 180, "[TIME]", new Font("Helvetica", Font.BOLD, 20), Color.white);
+                console.drawText(60, 210, timer.getTimeString(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
                 console.drawText(60, 250, "[Next 2 Birds]", new Font("Helvetica", Font.BOLD, 20), Color.white);
 
                 console.drawImage(60, 255, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem1Type()))).getImage());
                 console.drawImage(120, 255, new ImageIcon(getClass().getResource(Gem.getTypeFile(Engine.getNextGem2Type()))).getImage());
 
-                console.drawText(60, 380, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
-                console.drawText(60, 410, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
-
-                console.drawText(60, 480, "[OPTION]", new Font("Helvetica", Font.BOLD, 20), Color.orange);
+                console.drawText(60, 350, "[SCORE]", new Font("Helvetica", Font.BOLD, 20), Color.white);
+                console.drawText(60, 380, Engine.showScore(), new Font("Helvetica", Font.PLAIN, 20), Color.white);
+                
+                console.drawText(60, 425, "[HIGHEST]", new Font("Helvetica", Font.BOLD, 20), Color.white);
+                console.drawText(60, 455, Integer.toString(Engine.Score.getHScore()), new Font("Helvetica", Font.PLAIN, 20), Color.white);
+                
+                console.drawText(60, 510, "[OPTION]", new Font("Helvetica", Font.BOLD, 20), Color.orange);
                 for (int i = 0; i < 8; i++) { //display gems
                     for (int j = 0; j < 8; j++) {
                         gem[i][j].display();
@@ -110,8 +114,7 @@ public class Demo1 {
                 timer.countDown();
             }
 
-            if (timer.getCurrentTime() == 0) {
-                Engine.Score.readHScore();
+            if (timer.getCurrentTime() == 0) {                
                 if (Engine.Score.getScore() > Engine.Score.getHScore()) {
                     Engine.Score.setHScore(Engine.Score.getScore());
                     int response = JOptionPane.showConfirmDialog(null, "Congrats! " + " New Highest Score:  " + Engine.showScore() + " Do you want to retry?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);

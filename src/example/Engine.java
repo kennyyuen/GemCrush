@@ -480,7 +480,8 @@ public class Engine {
         public static void readHScore(){
             try {
                 Scanner file = new Scanner(new File("score.txt"));
-                hScore = Integer.parseInt(file.nextLine());
+                String s = file.nextLine();
+                hScore = Integer.parseInt(s.trim());
             } catch (FileNotFoundException ex) {
             }           
         }
@@ -616,7 +617,7 @@ public class Engine {
 
         public static boolean isAt(Point point) {
             if (point != null) {
-                return (point.x >= (60) && point.x < (150) && point.y >= (464) && point.y < (482));
+                return (point.x >= (60) && point.x < (150) && point.y >= (492) && point.y < (512));
             } else {
                 return false;
             }
