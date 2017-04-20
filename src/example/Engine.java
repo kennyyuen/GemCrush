@@ -18,17 +18,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
 /**
  *
  * @author yuen
  */
 public class Engine {
-
+    
     private static int selectedX;
     private static int selectedY;
     private static int nextGem1;
@@ -36,9 +35,9 @@ public class Engine {
     private static Gem[][] gem;
     private static Timer timer;
     private static boolean load;
-
+    
     public static class Combo {
-
+        
         private int matches; // how many match 
         private int xIndex; //where start the combo
         private int yIndex; //which row or col
@@ -48,43 +47,43 @@ public class Engine {
             xIndex = -1;
             yIndex = -1;
         }
-
+        
         public Combo(int m, int in) {
             matches = m;
             xIndex = in;
             yIndex = -1;
         }
-
+        
         public void setYIndex(int y) {
             yIndex = y;
         }
-
+        
         public int getCombo() {
             return matches;
         }
-
+        
         public int getXIndex() {
             return xIndex;
         }
-
+        
         public int getYIndex() {
             return yIndex;
         }
     }
-
+    
     public static void resetSelectedXY() {
         selectedX = -1;
         selectedY = -1;
     }
-
+    
     public static int getSelectedX() {
         return selectedX;
     }
-
+    
     public static int getSelectedY() {
         return selectedY;
     }
-
+    
     private static int[] checkFocus(Point point, Gem[][] gem) { //see which one user select 
         if (point != null) {                                    // if no return -1,-1
             for (int i = 0; i < 8; i++) {
@@ -97,7 +96,7 @@ public class Engine {
         }
         return new int[]{-1, -1};
     }
-
+    
     public static void showFocus(Gem[][] gem, Point point) { //text the selected one and do action
         int[] selected = checkFocus(point, gem);
         if (selected[0] != -1) {
@@ -145,7 +144,7 @@ public class Engine {
             }
         }
     }
-
+    
     public static boolean isFocus(Gem[][] gem) { //check selected or not
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -156,7 +155,7 @@ public class Engine {
         }
         return false;
     }
-
+    
     private static void setAllFocus(Gem[][] gem, boolean flag) { //all light down or up
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -164,7 +163,7 @@ public class Engine {
             }
         }
     }
-
+    
     private static Gem[] rowcomboToGems(Gem[][] gem, Combo combo) { //
         Gem[] temp = new Gem[combo.getCombo()];
         for (int i = 0; i < combo.getCombo(); i++) {
@@ -172,7 +171,7 @@ public class Engine {
         }
         return temp;
     }
-
+    
     private static Gem[] colcomboToGems(Gem[][] gem, Combo combo) {
         Gem[] temp = new Gem[combo.getCombo()];
         for (int i = 0; i < combo.getCombo(); i++) {
@@ -180,12 +179,12 @@ public class Engine {
         }
         return temp;
     }
-
+    
     private static void removeGem(Gem gem) {
         gem.setType(7);
         gem.setPic(Gem.getTypeFile(gem.getType()));
     }
-
+    
     public static boolean isMatch(Gem[][] gem) {
         boolean match = false;
         Combo[] rowCombo = checkMatchHorizontal(gem);
@@ -195,7 +194,7 @@ public class Engine {
         }
         return match;
     }
-
+    
     public static void checkMatch(Gem[][] gem) {
         Combo[] rowCombo = checkMatchHorizontal(gem); //see how many and where is row combo
         Combo[] colCombo = checkMatchVertical(gem); //see how many and where is col combo
@@ -237,7 +236,7 @@ public class Engine {
         }
         Score.calcScore(count);
     }
-
+    
     private static void fallDown(Gem[][] gem) {
         for (int i = 0; i < 8; i++) {
             int[] type = getColType(i, gem); //the ith row of col type array 
@@ -247,15 +246,14 @@ public class Engine {
                         type[z] = type[z - 1];
                         type[z - 1] = 7;
                         gem[i][z].setType(gem[i][z - 1].getType());
-                        gem[i][z - 1].setType(7);
+                        gem[i][z - 1].setType(7);                        
                     }
-                }         
+                }                
             }
         }
         reprint(gem);
     }
     
-
     private static void addNew(Gem[][] gem) { //add new gems to empty gems
         for (int i = 0; i < 8; i++) {
             int[] type = getColType(i, gem);
@@ -274,7 +272,7 @@ public class Engine {
             }
         }
     }
-
+    
     public static Combo[] checkMatchHorizontal(Gem[][] gem) { //what combo in each row line
         Combo[] tRowCombo = new Combo[16];
         tRowCombo[0] = new Combo();
@@ -292,7 +290,7 @@ public class Engine {
         }
         return tRowCombo; //total row combo
     }
-
+    
     public static Combo[] checkMatchVertical(Gem[][] gem) { //what combo in each col line
         Combo[] tColCombo = new Combo[16];
         tColCombo[0] = new Combo();
@@ -310,7 +308,7 @@ public class Engine {
         }
         return tColCombo; //return col combo
     }
-
+    
     private static Combo[] findMatch(int[] type) { //find combo
         int count = 1, j = 0;
         Combo[] c = new Combo[2];
@@ -333,7 +331,7 @@ public class Engine {
         }
         return c;
     }
-
+    
     private static int[] getRowType(int j, Gem[][] gem) {
         int[] type = new int[8];
         for (int i = 0; i < 8; i++) {
@@ -341,7 +339,7 @@ public class Engine {
         }
         return type;
     }
-
+    
     private static int[] getColType(int i, Gem[][] gem) {
         int[] type = new int[8];
         for (int j = 0; j < 8; j++) {
@@ -349,31 +347,31 @@ public class Engine {
         }
         return type;
     }
-
+    
     public static void random2GemType() {
         nextGem1 = (int) (Math.random() * 7);
         nextGem2 = (int) (Math.random() * 7);
     }
-
+    
     public static int getNextGem1Type() {
         return nextGem1;
     }
-
+    
     public static int getNextGem2Type() {
         return nextGem2;
     }
-
+    
     public static void drawNext2() {
         GameConsole.getInstance().drawImage(60, 250, new ImageIcon(Gem.getTypeFile(nextGem1)).getImage());
     }
-
+    
     private static void swapGem(Gem[][] gem, int x, int y) {
         int temp = gem[selectedX][selectedY].getType();
         gem[selectedX][selectedY].setType(gem[x][y].getType());
         gem[x][y].setType(temp);
         reprint(gem);
     }
-
+    
     private static void reprint(Gem[][] gem) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -382,31 +380,31 @@ public class Engine {
             }
         }
     }
-
+    
     public static Score newScore() {
         return new Score();
     }
-
+    
     public static String showScore() {
         return Integer.toString(Score.getScore());
     }
-
+    
     public static void setGem(Gem[][] g) {
         gem = g;
     }
-
+    
     public static Gem[][] getGem() {
         return gem;
     }
-
+    
     public static void setTimer(Timer t) {
         timer = t;
     }
-
+    
     public static Timer getTimer() {
         return timer;
     }
-
+    
     private static String[] typeData() {
         String[] data = new String[64];
         int count = 0;
@@ -418,22 +416,22 @@ public class Engine {
         }
         return data;
     }
-
+    
     private static String timeData() {
         return Integer.toString(timer.getCurrentTime());
     }
-
+    
     private static String scoreData() {
         return showScore();
     }
-
+    
     private static String[] next2Data() {
         String[] type = new String[2];
         type[0] = Integer.toString(nextGem1);
         type[1] = Integer.toString(nextGem2);
         return type;
     }
-
+    
     private static void loadSave(String[] data, String s, String time, String[] next) {
         int count = 0;
         for (int i = 0; i < 8; i++) {
@@ -447,47 +445,47 @@ public class Engine {
         nextGem1 = Integer.parseInt(next[0]);
         nextGem2 = Integer.parseInt(next[1]);
     }
-
+    
     private static void setLoadSave(boolean flag) {
         load = flag;
     }
-
+    
     public static boolean isLoadSave() {
         return load;
     }
-
+    
     public static class Score {
-
+        
         private static int score;
         private static int hScore;
-
+        
         public Score() {
             score = 0;
         }
-
+        
         public static void calcScore(int gemRemoved) {
             score += gemRemoved * 10;
         }
-
+        
         public static int getScore() {
             return score;
         }
-
+        
         private static void setScore(int s) {
             score = s;
         }
         
-        public static void readHScore(){
+        public static void readHScore() {
             try {
                 Scanner file = new Scanner(new File("score.txt"));
                 String s = file.nextLine();
                 hScore = Integer.parseInt(s.trim());
             } catch (FileNotFoundException ex) {
-            }           
+            }
         }
         
-        public static void setHScore(int s){
-            hScore = s;            
+        public static void setHScore(int s) {
+            hScore = s;
             try {
                 FileOutputStream out = new FileOutputStream("score.txt");
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
@@ -497,17 +495,17 @@ public class Engine {
             }
         }
         
-        public static int getHScore(){
+        public static int getHScore() {
             return hScore;
         }
     }
-
+    
     public static class SaveLoad extends JFrame {
-
+        
         private final JButton save, load, back;
         private final JPanel main;
         Font font = new Font("Time new Roman", Font.BOLD, 14);
-
+        
         public SaveLoad() {
             setLocationRelativeTo(null);
             setTitle("Save & Load");
@@ -517,29 +515,29 @@ public class Engine {
             load = new JButton("Load Save");
             back = new JButton("Back");
             ActionListener listener = new ButtonListener();
-
+            
             save.addActionListener(listener);
             load.addActionListener(listener);
             back.addActionListener(listener);
-
+            
             save.setFont(font);
             load.setFont(font);
             back.setFont(font);
-
+            
             Border margin = new EmptyBorder(20, 40, 20, 40);
             main.setBorder(margin);
             main.setLayout(new GridLayout(3, 1, 0, 20));
             main.add(save);
             main.add(load);
             main.add(back);
-
+            
             add(main);
             setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-
+            
         }
-
+        
         private class ButtonListener implements ActionListener {
-
+            
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (event.getSource() == back) {
@@ -573,7 +571,7 @@ public class Engine {
                                     bw.close();
                                 }
                             }
-
+                            
                         }
                     } catch (IOException ex) {
                     }
@@ -605,33 +603,33 @@ public class Engine {
                                 JOptionPane.showMessageDialog(null, "This Save location has no content.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         } catch (FileNotFoundException ex) {
-
+                            
                         }
                     }
-
+                    
                 }
-
+                
             }
-
+            
         }
-
+        
         public static boolean isAt(Point point) {
             if (point != null) {
                 return (point.x >= (60) && point.x < (150) && point.y >= (492) && point.y < (512));
             } else {
                 return false;
             }
-
+            
         }
-
+        
         public static void loadOptionPanel(Point point) {
             if (isAt(point)) {
                 SaveLoad saveload = new SaveLoad();
                 saveload.setVisible(true);
             }
-
+            
         }
-
+        
     }
-
+    
 }
