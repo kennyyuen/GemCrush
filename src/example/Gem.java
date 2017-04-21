@@ -33,7 +33,8 @@ public class Gem {
     private Image pic;
     private Image focus;
     private int type;
-    private static final String[] typeFile = {"/assets/cn.png","/assets/us.png","/assets/br.png","/assets/ar.png","/assets/de.png","/assets/is.png","/assets/kr.png","/assets/dummy.png"};
+    public static boolean file = true;
+    private static String[] typeFile = {"/assets/cn.png","/assets/us.png","/assets/br.png","/assets/ar.png","/assets/de.png","/assets/is.png","/assets/kr.png","/assets/dummy.png"};
 
 
     Gem(int x, int y, int t) {
@@ -104,6 +105,10 @@ public class Gem {
     
     public void setType(int t){
         type = t;
+    }
+    
+    public static void setTypeFile(String[] file){
+        typeFile = file;
     }
 
 }

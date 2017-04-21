@@ -58,7 +58,7 @@ public class Demo1 {
         int height = console.getBoardHeight();
 
         // set custom background image
-        console.setBackground("/assets/board2.png");
+        console.setBackground("/assets/board3.png");
         Sound bgm = new Sound("/assets/bgm.wav");
         Timer timer = new Timer();
         timer.start();
@@ -74,8 +74,8 @@ public class Demo1 {
             // get whatever inputs
             Point point = console.getClickedPoint();
             Engine.SaveLoad.loadOptionPanel(point);
-            Engine.showFocus(gem, point); //selected point 
-            Engine.checkMatch(gem); //check if there any combo
+            Engine.showFocus(gem, point,console); //selected point 
+            Engine.checkMatch(gem,console); //check if there any combo
             if (Engine.isLoadSave()) {
                 gem = Engine.getGem();
                 timer = Engine.getTimer();
@@ -138,5 +138,5 @@ public class Demo1 {
             }
         }
 
-    }
+    }    
 }
