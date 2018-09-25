@@ -126,7 +126,6 @@ public class Engine {
                         if (selected[0] == selectedX) {
                             swapGem(gem, selected[0], selected[1], console);
                             setAllFocus(gem, false);
-                            System.out.println("clicked");
                         } else {
                             Sound sound = new Sound("/assets/select.wav");
                             gem[selectedX][selectedY].toggleFocus();
@@ -213,7 +212,7 @@ public class Engine {
                     j++;
                     count++;
                 }
-                //sound.playSound();
+                sound.playSound();
                 i++;
             }
             i = 0;
@@ -228,7 +227,7 @@ public class Engine {
                     removeGem(remGem[j]);
                     j++;
                 }
-                //sound.playSound();
+                sound.playSound();
                 i++;
             }
             console.clear();
