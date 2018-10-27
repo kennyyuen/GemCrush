@@ -643,6 +643,26 @@ public class Engine {
                                     bw.close();
                                 }
                             }
+                            else {
+                                FileOutputStream out = new FileOutputStream(name + ".txt");
+                                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
+                                String[] data = Engine.typeData();
+                                String[] next = Engine.next2Data();
+                                
+                                for (int i = 0; i < 64; i++) {
+                                    bw.write(data[i]);
+                                    bw.newLine();
+                                }
+                                bw.write(Engine.scoreData());
+                                bw.newLine();
+                                bw.write(Engine.timeData());
+                                
+                                for (int i = 0; i < 2; i++) {
+                                    bw.newLine();
+                                    bw.write(next[i]);
+                                }
+                                bw.close();
+                            }
 
                         }
                     } catch (IOException ex) {
