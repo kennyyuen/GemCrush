@@ -14,5 +14,5 @@ There are 7 different color of gems on the 8x8 board. User can swap between any 
 ## Build
 The Executable jar file is located at dist/GemsCrush.jar. Feel free to try it out.
 
-## Screen Shot:
+## Screen Shot
 ![Screen Shot](/images/ui.png)
