@@ -11,5 +11,8 @@ There are 7 different color of gems on the 8x8 board. User can swap between any 
 * Three game saving slots. User can save more than one game play. 
 * Brighter and different looking background for better visual looking. 
 
+## Build
+The Executable jar file is located at dist/GemsCrush.jar. Feel free to try it out.
+
 ## Screen Shot:
 ![Screen Shot](/images/ui.png)
