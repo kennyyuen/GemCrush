@@ -1,4 +1,4 @@
-# GemCrush - Bird Crush
+# GemCrush - Bird Crush [![Codacy Badge](https://api.codacy.com/project/badge/Grade/05f1a582055f4cd18142524cc5944fbd)](https://www.codacy.com/manual/kennyyuen2008/GemCrush?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kennyyuen/GemCrush&amp;utm_campaign=Badge_Grade)
 <p>This is a Java game project for education purpose. </p>
 
 ## Game Introduction and Playing method:
@@ -19,4 +19,5 @@
 ![Screen Shot](/images/ui.png)
 
 >ALL MUSIC, SOUNDS AND GRAPHIC USED ARE OWNED BY THEIR RESPECTIVE OWNERS.
+>
 >"Copyright Disclaimer, Under Section 107 of the Copyright Act 1976, allowance is made for 'fair use' for purposes such as criticism, comment, news reporting, teaching, scholarship, and research. Fair use is a use permitted by copyright statute that might otherwise be infringing. Non-profit, educational or personal use tips the balance in favor of fair use."
